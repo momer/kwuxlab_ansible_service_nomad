@@ -1,4 +1,4 @@
-local_nomad_host_volumes:
+target_nomad_host_volumes:
   # Traefik
   - name: traefik_acme
     path: /opt/nomad/traefik_acme

@@ -1,5 +1,5 @@
 client {
-{% for nomad_host_volume in local_nomad_host_volumes %}
+{% for nomad_host_volume in target_nomad_host_volumes %}
 {% if nomad_host_volume.create_for | default(True) | bool %}
     host_volume "{{ nomad_host_volume['name'] }}" {
         path = "{{ nomad_host_volume['path'] }}"
