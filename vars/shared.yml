@@ -1,4 +1,6 @@
 ---
+# Default host path to store local facts
+ansible_local_facts_dir: "{{ ansible_local_facts_dir | default('/etc/ansible/facts.d') }}"
 
 # Set the ansible python interpreter on host
 ansible_python_interpreter: /usr/bin/python3
