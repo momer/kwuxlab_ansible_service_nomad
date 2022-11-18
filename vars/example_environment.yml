@@ -17,13 +17,25 @@ target_nomad_reserved_disk: 1500
 # Specifies the amount of CPU to reserve, in MHz.
 target_nomad_reserved_cpu: 300
 
-# The Consul Master key/token to be used to configure ACLs for the cluster.
-consul_master_key: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+# The ACL token to be used to configure and access Consul
+# from the Vault cluster.
+#
+# https://developer.hashicorp.com/vault/docs/configuration/storage/consul
+#
+# In production, this should be a *new* token, and NOT the master token used for
+# the initial bootstrapping of Consul's ACL configuration.
+#
+# Also note, that this is a sensitive value; an example UUID is provided below
+# for demonstration purposes, allowing for consistent/tangible examples
+# that can be followed across repositories.
+consul_master_key: "58b39ecd-614c-5094-a4ae-c4db5c08e496"
 
 # The Vault token, with access to the kv-v1 store, to be used to store
 # Consul ACLs.
-vault_master_token: "s.xxxxxxxxxxxxxxxxxxxxx"
+#
+# Below is an example token; keep yours secret. Keep it safe.
+vault_master_token: "s.79CriBBzcm4cpFaQexmG0lHT"
 
 # A `target_`-namespaced variable (to avoid conflicts), with the value of the
 # primary vault datacenter, for access via Consul-configured DNS.
-target_vault_primary_datacenter: global
+target_vault_primary_datacenter: dc1
