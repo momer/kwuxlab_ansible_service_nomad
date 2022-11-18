@@ -160,11 +160,16 @@
   tasks:
     - name: Nomad host volumes
       block:
+        - name: "Ensure existence of nomad config directory ({{ target_nomad_config_dir }})"
+          file:
+            path: "{{ target_nomad_config_dir }}"
+            state: directory
+            mode: "0755"
         - name: "create volume {{ item['name'] }}"
           file:
             path: "{{ item['path'] }}"
-            owner: "{{ item['owner'] | default(nomad_user) }}"
-            group: "{{ item['group'] | default(nomad_group) }}"
+            owner: "{{ item['owner'] }}"
+            group: "{{ item['group'] }}"
             state: directory
             mode: "{{ item['mode'] | default('0755') }}"
           with_items: "{{ target_nomad_host_volumes }}"
