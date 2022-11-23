@@ -69,7 +69,7 @@
         nomad_manage_user: no
 
         # Ansible group
-        nomad_group_name: docker
+        nomad_group_name: "{{ variable_hosts | default('kwuxlab_hosts') }}"
 
         nomad_cluster_name: "{{ datacenter }}"
         nomad_datacenter: "{{ datacenter }}"
