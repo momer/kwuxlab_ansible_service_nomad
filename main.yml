@@ -10,6 +10,7 @@
     - version.yml
   vars:
     target_vault_addr: "http://active.vault.service.{{ target_vault_primary_datacenter }}.consul:8200"
+    target_expected_server_count: "{{ groups[(variable_hosts | default('kwuxlab_hosts'))] | map('extract', hostvars) | selectattr('primary_consul_server', 'equalto', 'true') | list | length }}"
   tags:
     - kwuxlab_ansible_service_nomad
   pre_tasks:
@@ -71,6 +72,11 @@
         # Ansible group
         nomad_group_name: "{{ variable_hosts | default('kwuxlab_hosts') }}"
 
+        # Overriding bootstrap_expect can be helpful if, for example, you've opted to only bring up
+        # one Vagrant/Nomad server node, and so cannot meet the minimum
+        # requirement of the default bootstrap expectation of 3 nodes when using
+        # consul integration (set by the ansible-nomad role).
+        nomad_bootstrap_expect: "{{ [ (target_expected_server_count | int), 3 ] | min }}"
         nomad_cluster_name: "{{ datacenter }}"
         nomad_datacenter: "{{ datacenter }}"
         nomad_node_name: "{{ ansible_facts['nodename'] }}"
